@@ -17,7 +17,10 @@ function Input({onTextChange}) {
         var text = (e.target.result); // This is the text file  
         // Define content
         var content = splitText(text);
-
+        // Iterate through the lines. If there is any instance of 2 or more consecutive spaces, replace it with a single space.
+        for (var j = 0; j < content.length; j++) {
+            content[j] = content[j].replace(/\s{2,}/g, ' ');
+        }
         // Iterate through the list. If a line does not end with a ".", "!", or "."", or "?", append a period to the end of the line.
         for (var i = 0; i < content.length; i++) {
             if (content[i].endsWith(".") || content[i].endsWith("!") || content[i].endsWith("?")) {

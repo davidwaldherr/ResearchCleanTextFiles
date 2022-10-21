@@ -13,7 +13,10 @@ function App() {
 
   return (
     <div className="App">
-      <p>Text File Processor</p>
+      <h1>Text File Processor</h1>
+      <p>
+        Insert text file to process.
+      </p>
       <Input onTextChange={onTextChange} />
       <DownloadButton text={text} />
     </div>
