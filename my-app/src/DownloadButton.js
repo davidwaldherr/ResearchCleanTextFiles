@@ -1,37 +1,21 @@
-import React from 'react'; 
+import React from 'react';
 
-class DownloadButton extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        loading: false
-      };
+function DownloadButton({text}) {
+
+    function downloadText() {
+        const element = document.createElement("a");
+        const file = new Blob([text], {type: 'text/plain'});
+        element.href = URL.createObjectURL(file);
+        element.download = "text.txt";
+        document.body.appendChild(element); // Required for this to work in FireFox
+        element.click();
     }
-   
-    handleClick = () => {
-      this.setState({ loading: true }, () => {
-        const file = new Blob(['Hello, world!'], { type: 'text/plain' });
-        const a = document.createElement('a');
-        const url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = 'hello-world.txt';
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-          this.setState({ loading: false });
-        }, 100);
-      });
-    };
-   
-    render() {
-      return (
-        <button onClick={this.handleClick} disabled={this.state.loading}>
-          {this.state.loading ? 'Loading...' : 'Download'}
-        </button>
-      );
-    }
-  }
+
+    return (
+        <div>
+            <button onClick={downloadText}>Download</button>
+        </div>
+    );
+}
 
 export default DownloadButton;

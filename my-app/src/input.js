@@ -1,12 +1,6 @@
-// input.js
-// This component is a simple input field that allows the user to upload a text file.
-// The appendText function is called on the file upload event.
-// Then, the Input function returns the new text file to the App function.
-//
-
 import React from 'react';
 
-function Input() {
+function Input({onTextChange}) {
     const [text, setText] = React.useState("");
     
     function appendText(e) {
@@ -15,7 +9,9 @@ function Input() {
         
         reader.onload = (e) => {
         var text = (e.target.result); // This is the text file
+        text = "Hello there.\n" + text;
         setText(text); // This is the new text file
+        onTextChange(text);
         };
 
         reader.readAsText(file); // read the file
