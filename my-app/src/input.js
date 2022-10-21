@@ -12,26 +12,12 @@ function Input() {
     function appendText(e) {
         const file = e.target.files[0];
         const reader = new FileReader();
+        
         reader.onload = (e) => {
         var text = (e.target.result); // This is the text file
-        var lines = text.split('\n');
-
-        for (var i = 0; i < lines.length; i++) {
-            // after every period, add a space
-            lines[i] = lines[i].replace('.', '. ');
-            lines[i] = " ".join(lines[i].split());
-            // Strip the line
-            lines[i] = lines[i].strip();
-            // if the line does not end with a period, delete every character after the last period
-            if (!lines[i].endswith('.')) {
-                lines[i] = lines[i].substring(0, lines[i].lastIndexOf('.') + 1);
-            }
-        }
-        // Join the lines back together
-        text = lines.join('\n');
-        
         setText(text); // This is the new text file
         };
+
         reader.readAsText(file); // read the file
     }
 
