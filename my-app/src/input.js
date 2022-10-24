@@ -17,6 +17,10 @@ function Input({onTextChange}) {
         var text = (e.target.result); // This is the text file  
         // Define content
         var content = splitText(text);
+        // Strip each line of whitespace
+        content = content.map(line => line.trim());
+        // Remove empty lines
+        content = content.filter(line => line !== "");
         // Iterate through the lines. If there is any instance of 2 or more consecutive spaces, replace it with a single space.
         for (var j = 0; j < content.length; j++) {
             content[j] = content[j].replace(/\s{2,}/g, ' ');
