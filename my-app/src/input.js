@@ -19,11 +19,15 @@ function Input({onTextChange}) {
         var content = splitText(text);
         // Strip each line of whitespace
         content = content.map(line => line.trim());
-        // Remove empty lines
-        content = content.filter(line => line !== "");
         // Iterate through the lines. If there is any instance of 2 or more consecutive spaces, replace it with a single space.
         for (var j = 0; j < content.length; j++) {
             content[j] = content[j].replace(/\s{2,}/g, ' ');
+        }
+        // Iterate through the lines. If there is any duplicate line, remove it.
+        for (var i = 0; i < content.length; i++) {
+            if (content[i] === content[i+1]) {
+                content.splice(i, 1);
+            }
         }
         // Iterate through the list. If a line does not end with a ".", "!", or "."", or "?", append a period to the end of the line.
         for (var i = 0; i < content.length; i++) {
@@ -33,6 +37,29 @@ function Input({onTextChange}) {
                 content[i] = content[i] + ".";
             }
         }
+        // If the line contains over 12 periods in it, create a new line after every 12th period.
+        function periodCheck(list) {
+            var count = 0;
+            var newList = [];
+            for (var i = 0; i < list.length; i++) {
+              if (list[i] === '.') {
+                count++;
+              }
+              if (count === 10) {
+                newList.push(list.slice(0, i + 1));
+                list = list.slice(i + 1);
+                count = 0;
+                i = -1;
+              }
+            }
+            if (list.length) {
+              newList.push(list);
+            }
+            return newList;
+        }
+        periodCheck(content);
+        // Remove empty lines
+        content = content.filter(line => line !== "");
         // Join the list into a string and set the state of the text variable to the string.
         setText(content.join("\n"));
         onTextChange(content.join("\n"));
