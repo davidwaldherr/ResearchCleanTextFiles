@@ -24,42 +24,51 @@ function Input({onTextChange}) {
             content[j] = content[j].replace(/\s{2,}/g, ' ');
         }
         // Iterate through the lines. Remove all duplicate lines.
-        for (var i = 0; i < content.length; i++) {
-            for (var k = i + 1; k < content.length; k++) {
-                if (content[i] === content[k]) {
+        for (var q = 0; q < content.length; q++) {
+            for (var k = q + 1; k < content.length; k++) {
+                if (content[q] === content[k]) {
                     content.splice(k, 1);
                 }
             }
         }
-        // Iterate through the list. If a line does not end with a ".", "!", or "."", or "?", append a period to the end of the line.
+        // // Iterate through the list. If a line does not end with a ".", "!", or "."", or "?", append the next line to it.
+        // for (var w = 0; w < content.length; w++){
+        //     for (var l = 0; l < content.length; l++) {
+        //         if (content[l].slice(-1) !== "." && content[l].slice(-1) !== "!" && content[l].slice(-1) !== "?" && content[l].slice(-1) !== "\"") {
+        //             content[l] = content[l] + " " + content[l + 1];
+        //             content.splice(l + 1, 1);
+        //         }
+        //     }
+        // }
+        // Iterate through the list. If a line does not end with a ".", "!", or "."", or """, or "?", append a period to the end of the line.
         for (var i = 0; i < content.length; i++) {
-            if (content[i].endsWith(".") || content[i].endsWith("!") || content[i].endsWith("?")) {
+            if (content[i].endsWith(".") || content[i].endsWith("!") || content[i].endsWith("?") || content[i].endsWith("\"")) {
                 continue;
             } else {
                 content[i] = content[i] + ".";
             }
         }
-        // If the line contains over 12 periods in it, create a new line after every 12th period.
-        function periodCheck(list) {
-            var count = 0;
-            var newList = [];
-            for (var i = 0; i < list.length; i++) {
-              if (list[i] === '.') {
-                count++;
-              }
-              if (count === 10) {
-                newList.push(list.slice(0, i + 1));
-                list = list.slice(i + 1);
-                count = 0;
-                i = -1;
-              }
-            }
-            if (list.length) {
-              newList.push(list);
-            }
-            return newList;
-        }
-        periodCheck(content);
+        // // If the line contains over 12 periods in it, create a new line after every 12th period.
+        // function periodCheck(list) {
+        //     var count = 0;
+        //     var newList = [];
+        //     for (var x = 0; x < list.length; x++) {
+        //       if (list[x] === '.') {
+        //         count++;
+        //       }
+        //       if (count === 10) {
+        //         newList.push(list.slice(0, x + 1));
+        //         list = list.slice(x + 1);
+        //         count = 0;
+        //         x = -1;
+        //       }
+        //     }
+        //     if (list.length) {
+        //       newList.push(list);
+        //     }
+        //     return newList;
+        // }
+        // periodCheck(content);
         // Remove empty lines
         content = content.filter(line => line !== "");
         // Join the list into a string and set the state of the text variable to the string.
