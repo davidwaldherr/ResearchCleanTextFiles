@@ -23,10 +23,12 @@ function Input({onTextChange}) {
         for (var j = 0; j < content.length; j++) {
             content[j] = content[j].replace(/\s{2,}/g, ' ');
         }
-        // Iterate through the lines. If there is any duplicate line, remove it.
+        // Iterate through the lines. Remove all duplicate lines.
         for (var i = 0; i < content.length; i++) {
-            if (content[i] === content[i+1]) {
-                content.splice(i, 1);
+            for (var k = i + 1; k < content.length; k++) {
+                if (content[i] === content[k]) {
+                    content.splice(k, 1);
+                }
             }
         }
         // Iterate through the list. If a line does not end with a ".", "!", or "."", or "?", append a period to the end of the line.
